@@ -41,26 +41,24 @@ int main(int argc, char const *argv[]) {
     }
 
     while(1) {
-        printf("Esperando por novo cliente...\n");
+        printf("Esperando por nova mensagem...\n");
 
         /* Comunicacao */
-        do {
-            nbytes = recvfrom(ssocket, msg, MSG_TAMANHO_MAX, 0, 
-                              (struct sockaddr*) &endCliente, &tamEndereco);
-            if (nbytes < 0) {
-                printf("Falhou ao receber uma mensagem.\n");
-                break;
-            }
-            printf("Msg recebida: %s\n", msg);
+        nbytes = recvfrom(ssocket, msg, MSG_TAMANHO_MAX, 0, 
+                            (struct sockaddr*) &endCliente, &tamEndereco);
+        if (nbytes < 0) {
+            printf("Falhou ao receber uma mensagem.\n");
+            break;
+        }
+        msg[nbytes] = 0;
+        printf("Msg recebida: %s\n", msg);
 
-            nbytes = sendto(ssocket, msg, strlen(msg) + 1, 0, 
-                            (struct sockaddr*) &endCliente, sizeof(endCliente));
-            if (nbytes < 0) {
-                printf("Falhou ao enviar a mensagem.\n");
-                break;
-            }
-
-        } while(strcmp(msg, "tchau"));
+        nbytes = sendto(ssocket, msg, nbytes, 0, 
+                        (struct sockaddr*) &endCliente, sizeof(endCliente));
+        if (nbytes < 0) {
+            printf("Falhou ao enviar a mensagem.\n");
+            break;
+        }
     }
 
     close(ssocket);

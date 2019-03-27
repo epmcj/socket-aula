@@ -19,7 +19,7 @@ csocket.connect(endServidor)
 
 # Comunicacao
 while True:
-    msg = input("Msg: ").encode()
+    msg = input("Msg: ").encode("ascii")
     nbytes = csocket.send(msg)
     if nbytes != len(msg):
         print("Falhou ao enviar a mensagem")
@@ -29,9 +29,9 @@ while True:
     if not msg:
         print("Falhou para receber uma mensagem")
         break
-    print("Msg recebida: {}".format(msg.decode("utf-8")))
+    print("Msg recebida: {}".format(msg.decode("ascii")))
     
-    if msg.decode("utf-8") == "tchau":
+    if msg.decode("ascii") == "tchau":
         break
 
 csocket.close()

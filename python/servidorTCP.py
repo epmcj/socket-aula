@@ -29,14 +29,14 @@ while True:
         if not msg:
             print("Falhou para receber uma mensagem")
             break
-        print("Msg recebida: {}".format(msg.decode("utf-8")))
+        print("Msg recebida: {}".format(msg.decode("ascii")))
         
         nbytes = csocket.send(msg)
         if nbytes != len(msg):
             print("Falhou ao enviar a mensagem")
             break
         
-        if msg.decode("utf-8") == "tchau":
+        if msg.decode("ascii") == "tchau":
             break
     # Finalizacao
     csocket.close()

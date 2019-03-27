@@ -64,9 +64,10 @@ int main(int argc, char const *argv[]) {
                 printf("Falhou ao receber uma mensagem.\n");
                 break;
             }
+            msg[nbytes] = 0;
             printf("Msg recebida: %s\n", msg);
 
-            nbytes = send(csocket, msg, strlen(msg) + 1, 0);
+            nbytes = send(csocket, msg, nbytes, 0);
             if (nbytes < 0) {
                 printf("Falhou ao enviar a mensagem.\n");
                 break;

@@ -18,21 +18,17 @@ ssocket.bind(endereco)
 
 # Comunicacao
 while True:
-    print("Esperando por novo cliente...")
-    while True:
-        msg, endCliente = ssocket.recvfrom(MSG_TAMANHO_MAX)
-        if not msg:
-            print("Falhou para receber uma mensagem")
-            break
-        print("Msg recebida: {}".format(msg.decode("utf-8")))
-        
-        nbytes = ssocket.sendto(msg, endCliente)
-        if nbytes != len(msg):
-            print("Falhou ao enviar a mensagem")
-            break
-        
-        if msg.decode("utf-8") == "tchau":
-            break
+    print("Esperando por nova mensagem...")
+    msg, endCliente = ssocket.recvfrom(MSG_TAMANHO_MAX)
+    if not msg:
+        print("Falhou para receber uma mensagem")
+        break
+    print("Msg recebida: {}".format(msg.decode("ascii")))
+    
+    nbytes = ssocket.sendto(msg, endCliente)
+    if nbytes != len(msg):
+        print("Falhou ao enviar a mensagem")
+        break
 
 # Finalizacao
 ssocket.close()
